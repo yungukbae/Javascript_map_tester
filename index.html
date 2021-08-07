@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <title>간단한 지도 표시하기</title>
+  <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=c3037anuwt"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+
+
+<div id="map" style="width:80%;height:800px;"></div>
+
+
+
+<div style="width: 50px; height: 50px; background-color: aqua">
+  <div style="font-size: 1rem">마커</div>
+  <div>content</div>
+</div>
+
+
+<script>
+
+  $(document).on('click','.marker',function () {
+    console.log($(this).attr('id'));
+  })
+
+
+  let map = new naver.maps.Map('map', {
+    center: new naver.maps.LatLng(37.5303413,127.1216985),
+    zoom: 15
+  });
+
+  let making_mark = (name,x,y) => {
+    let marking = new naver.maps.Marker({
+      position: new naver.maps.LatLng(x,y),
+      map: map,
+      icon:{
+        content:['<div class="marker" id="' + name + '"  style="width: 80px; height: 80px; background-color: aqua">\n' +
+        '  <div style="font-size: 1rem">'+ name +'</div>\n' +
+        '  <div>content</div>\n' +
+        '</div>'].join(''),
+        anchor: new naver.maps.Point(0,0),
+      }
+    });
+    return marking;
+  }
+
+  let mark_location = {
+    "gangdong":[37.5300513,127.1237975],
+    "gangnam":[37.4968436,127.03292],
+    "sungdong":[37.5629627,127.0360438],
+    "jongro":[37.5734684,126.9767953],
+    "yongsan":[37.5325896,126.9878542],
+    "gwangjin":[37.5385333,127.0801885],
+    "junglang":[37.60656,127.0904353]
+  }
+
+  for(let key in mark_location){
+    console.log(mark_location[key]);
+    making_mark(key,mark_location[key][0],mark_location[key][1]);
+  }
+
+  //
+  // making_mark(new naver.maps.LatLng(37.5300513,127.1237975));
+  // making_mark(new naver.maps.LatLng(37.4968436,127.03292));
+
+</script>
+</body>
+</html>
